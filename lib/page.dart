@@ -30,6 +30,7 @@ class _BuildBody extends StatelessWidget {
   const _BuildBody({required this.controller});
 
   final ListController controller;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -182,7 +183,7 @@ class _BuildItemsList extends StatelessWidget {
                     ],
                   ),
                 ),
-                _BuildActionIcons(),
+                _BuildActionIcons(id:" Thư mục con thứ ${idList.toString()} (${numberChilid.toString()})"),
               ],
             ),
           ),
@@ -204,7 +205,7 @@ class _BuildItemsList extends StatelessWidget {
   }
 
   // ignore: non_constant_identifier_names
-  Row _BuildActionIcons() {
+  Row _BuildActionIcons({required String id}) {
     return Row(
       children: [
         const Icon(
@@ -219,17 +220,28 @@ class _BuildItemsList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 20,
-          height: 20,
-          child: Radio(
-            value: "hello",
-            groupValue: "hello",
-            onChanged: (value) {},
-            focusColor: AppColors.primary,
-            activeColor: AppColors.primary,
-            autofocus: false,
-          ),
-        ),
+            width: 20,
+            height: 20,
+            child: GetBuilder<ListController>(
+              id: id,
+              builder: (_) {
+                return Radio(
+                  value: controller.valueRadiobox,
+                  groupValue: id,
+                  onChanged: (value) {
+                    controller.valueRadiobox = id;
+                    if(controller.behindId!=""){
+                       controller.update([controller.behindId]);
+                    }
+                    controller.update([id]);
+                    controller.behindId=controller.valueRadiobox;
+                  },
+                  focusColor: AppColors.primary,
+                  activeColor: AppColors.primary,
+                  autofocus: false,
+                );
+              },
+            )),
       ],
     );
   }
@@ -258,7 +270,7 @@ class _BuildItemsList extends StatelessWidget {
                 ),
               ],
             ),
-            _BuildActionIcons(),
+            _BuildActionIcons(id: "Phần tử lưu trữ $index (${quantityItemSave.toString()})"),
           ],
         ),
       ),
