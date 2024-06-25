@@ -2,16 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:list/colors.dart';
-import 'package:list/controller.dart';
-import 'package:list/dime.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:list/core/configs/colors.dart';
+import 'package:list/core/configs/dime.dart';
+import 'package:list/features/list/list_controller.dart';
 
-class ListApp extends GetView<ListController> {
-  ListApp({super.key});
-
-  @override
-  final ListController controller = Get.put(ListController());
+class ListPage extends GetView<ListController> {
+  const ListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,6 @@ class ListApp extends GetView<ListController> {
       body: _BuildBody(
         controller: controller,
       ),
-      bottomNavigationBar: const MyBottomNavBar(),
     );
   }
 }
@@ -301,28 +296,3 @@ class _BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(50);
 }
 
-class MyBottomNavBar extends StatelessWidget {
-  const MyBottomNavBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(1000), color: Colors.redAccent),
-      child: const GNav(
-        color: Colors.grey,
-        backgroundColor: Colors.transparent,
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        tabBorderRadius: 15,
-        activeColor: Colors.white,
-        mainAxisAlignment: MainAxisAlignment.center,
-        tabs: [
-          GButton(icon: Icons.home),
-          GButton(icon: Icons.favorite),
-          GButton(icon: Icons.search),
-        ],
-      ),
-    );
-  }
-}
